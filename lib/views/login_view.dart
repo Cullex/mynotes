@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mynotes/views/register_view.dart';
 
 import '../firebase_options.dart';
 
@@ -86,6 +87,14 @@ class _LoginViewState extends State<LoginView> {
                       },
                       child: const Text('Login'),
                     ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const RegisterView()));
+                        },
+                        child: const Text('Not Registered? Click Here')),
                   ],
                 );
               default:
