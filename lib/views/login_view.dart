@@ -1,8 +1,7 @@
-import 'dart:developer' as devtools show log;
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mynotes/constants/routes.dart';
 import 'package:mynotes/views/register_view.dart';
 
 import '../firebase_options.dart';
@@ -35,15 +34,17 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: FutureBuilder(
-            future: Firebase.initializeApp(
-              options: DefaultFirebaseOptions.currentPlatform,
-            ),
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.done:
-                  return Center(
+      body: FutureBuilder(
+          future: Firebase.initializeApp(
+            options: DefaultFirebaseOptions.currentPlatform,
+          ),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.done:
+                return Center(
+                  child: SingleChildScrollView(
+                    reverse: true,
+                    padding: EdgeInsets.all(32),
                     child: Column(
                       children: [
                         const SizedBox(height: 50),
@@ -75,23 +76,29 @@ class _LoginViewState extends State<LoginView> {
                           controller: _email,
                           enableSuggestions: false,
                           autocorrect: false,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(Icons.email),
-                            hintText: "Enter Email Here",
-                          ),
+                          decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.email),
+                              hintText: 'Enter Email',
+                              contentPadding: const EdgeInsets.all(15),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30))),
+                        ),
+                        const SizedBox(
+                          height: 10,
                         ),
                         TextField(
                           controller: _password,
                           obscureText: true,
                           enableSuggestions: false,
                           autocorrect: false,
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(Icons.key),
-                            hintText: "Enter Password Here",
-                          ),
+                          decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.key),
+                              hintText: 'Enter Password',
+                              contentPadding: const EdgeInsets.all(15),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30))),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 5),
                         TextButton(
                           onPressed: () async {
                             final email = _email.text;
@@ -101,17 +108,20 @@ class _LoginViewState extends State<LoginView> {
                                   .signInWithEmailAndPassword(
                                       email: email, password: password);
                               Navigator.of(context).pushNamedAndRemoveUntil(
-                                  '/notes/', (route) => false);
+                                  notesRoute, (route) => false);
                             } on FirebaseAuthException catch (e) {
                               if (e.code == 'user-not-found') {
-                                devtools.log('User Not Found');
+                                await showErrorDialog(
+                                    context, 'User not found');
                               } else {
                                 if (e.code == 'wrong-password') {
-                                  devtools.log('wrong password');
+                                  await showErrorDialog(
+                                      context, 'Wrong Credentials');
                                 }
                               }
                             } catch (e) {
-                              devtools.log('user profile not found');
+                              await showErrorDialog(
+                                  context, 'User Profile Not Found');
                               print(e.runtimeType);
                             }
                           },
@@ -136,12 +146,34 @@ class _LoginViewState extends State<LoginView> {
                             )),
                       ],
                     ),
-                  );
-                default:
-                  return const Text('Loading.....');
-              }
-            }),
-      ),
+                  ),
+                );
+              default:
+                return const Text('Loading.....');
+            }
+          }),
     );
   }
+}
+
+Future<void> showErrorDialog(
+  BuildContext context,
+  String text,
+) {
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('An error occurred'),
+        content: Text(text),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Okay'))
+        ],
+      );
+    },
+  );
 }
