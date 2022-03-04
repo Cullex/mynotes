@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
+import 'package:mynotes/views/register_view.dart';
 
 import '../firebase_options.dart';
 import '../utilities/show_error_dialog.dart';
@@ -121,7 +122,7 @@ class _LoginViewState extends State<LoginView> {
                                   );
                                 } else {
                                   await showErrorDialog(
-                                      context, 'Error: ${e.code}');
+                                      context, 'Error:${e.code}');
                                 }
                               }
                             } catch (e) {
@@ -143,7 +144,8 @@ class _LoginViewState extends State<LoginView> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const LoginView()));
+                                      builder: (context) =>
+                                          const RegisterView()));
                             },
                             child: const Text(
                               'Not Registered? Click Here',
