@@ -116,13 +116,17 @@ class _LoginViewState extends State<LoginView> {
                               } else {
                                 if (e.code == 'wrong-password') {
                                   await showErrorDialog(
-                                      context, 'Wrong Credentials');
+                                    context,
+                                    'Wrong Credentials',
+                                  );
+                                } else {
+                                  await showErrorDialog(
+                                      context, 'Error: ${e.code}');
                                 }
                               }
                             } catch (e) {
                               await showErrorDialog(
                                   context, 'User Profile Not Found');
-                              print(e.runtimeType);
                             }
                           },
                           child: const Text(
