@@ -13,6 +13,7 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
+  bool isLoading = false;
   late final TextEditingController _email;
   late final TextEditingController _password;
 
@@ -87,6 +88,14 @@ class _RegisterViewState extends State<RegisterView> {
           ),
           TextButton(
             onPressed: () async {
+              setState(() {
+                isLoading = true;
+              });
+              Future.delayed(Duration(seconds: 3), () {
+                setState(() {
+                  isLoading = false;
+                });
+              });
               final email = _email.text;
               final password = _password.text;
               try {
@@ -111,10 +120,12 @@ class _RegisterViewState extends State<RegisterView> {
                 }
               }
             },
-            child: const Text(
-              'Register',
-              style: TextStyle(color: Colors.green),
-            ),
+            child: isLoading
+                ? CircularProgressIndicator(color: Colors.green)
+                : Text(
+                    'Register',
+                    style: TextStyle(color: Colors.green),
+                  ),
           ),
           TextButton(
             onPressed: () {
