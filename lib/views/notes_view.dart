@@ -46,111 +46,140 @@ class _NotesViewState extends State<NotesView> {
         ],
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Center(
-              child: Column(
-                children: [
-                  SizedBox(height: 40),
-                  CircleAvatar(
-                    radius: 45,
-                    backgroundImage: AssetImage('assets/img_1.png'),
-                  ),
-                  Text(
-                    'AFC Commercial Bank',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 35),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Center(
+                child: Column(
+                  children: [
+                    SizedBox(height: 40),
+                    CircleAvatar(
+                      radius: 45,
+                      backgroundImage: AssetImage('assets/img_1.png'),
                     ),
-                    elevation: 25,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        const ListTile(
-                          title: Text(
-                            'Open A New Account',
-                            textAlign: TextAlign.center,
-                          ),
-                          subtitle: Text(
-                            "Select Account Type You'd Like To Open",
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        const ListTile(
-                          leading: Icon(Icons.account_balance_wallet_sharp),
-                          title: Text('AgriPlus'),
-                          subtitle: Text('Low KYC Account'),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            TextButton(
-                              child: const Text(
-                                'Open',
-                                style: TextStyle(color: Colors.green),
-                              ),
-                              onPressed: () {
-                                Navigator.of(context)
-                                    .pushNamed(agriplusRegRoute);
-                              },
-                            ),
-                          ],
-                        ),
-                        Divider(
-                          color: Colors.green,
-                        ),
-                        const ListTile(
-                          leading: Icon(Icons.account_balance_wallet_sharp),
-                          title: Text('Farmers Account'),
-                          subtitle: Text('For Tobacco Farmers'),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            TextButton(
-                              child: const Text(
-                                'Open',
-                                style: TextStyle(color: Colors.green),
-                              ),
-                              onPressed: () {/* ... */},
-                            ),
-                          ],
-                        ),
-                        Divider(
-                          color: Colors.green,
-                        ),
-                        const ListTile(
-                          leading: Icon(Icons.account_balance_wallet_sharp),
-                          title: Text('AgriCash'),
-                          subtitle: Text('Full KYC Account'),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            TextButton(
-                              child: const Text(
-                                'Open',
-                                style: TextStyle(color: Colors.green),
-                              ),
-                              onPressed: () {/* ... */},
-                            ),
-                            const SizedBox(width: 8),
-                          ],
-                        ),
-                      ],
+                    Text(
+                      'AFC Commercial Bank',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green),
+                      textAlign: TextAlign.center,
                     ),
-                  ),
-                ],
+                    SizedBox(height: 35),
+                    Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      elevation: 25,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          const ListTile(
+                            title: Text(
+                              'Open A New Account',
+                              textAlign: TextAlign.center,
+                            ),
+                            subtitle: Text(
+                              "Select Account Type You'd Like To Open",
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Divider(
+                            color: Colors.green,
+                          ),
+                          const ListTile(
+                            leading: Icon(Icons.account_balance_wallet_sharp),
+                            title: Text('Tobacco Account'),
+                            subtitle: Text('For Tobacco Farmers'),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              TextButton(
+                                child: const Text(
+                                  'Open',
+                                  style: TextStyle(color: Colors.green),
+                                ),
+                                onPressed: () {/* ... */},
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            color: Colors.green,
+                          ),
+                          const ListTile(
+                            leading: Icon(Icons.account_balance_wallet_sharp),
+                            title: Text('AgriCash'),
+                            subtitle: Text('Full KYC Account'),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              TextButton(
+                                child: const Text(
+                                  'Open',
+                                  style: TextStyle(color: Colors.green),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pushNamed(agriCashRegRoute);
+                                },
+                              ),
+                              const SizedBox(width: 8),
+                            ],
+                          ),
+                          Divider(
+                            color: Colors.green,
+                          ),
+                          const ListTile(
+                            leading: Icon(Icons.account_balance_wallet_sharp),
+                            title: Text('Youth Account'),
+                            subtitle: Text('Full KYC Account'),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              TextButton(
+                                child: const Text(
+                                  'Open',
+                                  style: TextStyle(color: Colors.green),
+                                ),
+                                onPressed: () {/* ... */},
+                              ),
+                              const SizedBox(width: 8),
+                            ],
+                          ),
+                          Divider(
+                            color: Colors.green,
+                          ),
+                          const ListTile(
+                            leading: Icon(Icons.account_balance_wallet_sharp),
+                            title: Text('Cotton Account'),
+                            subtitle: Text('Full KYC Account'),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              TextButton(
+                                child: const Text(
+                                  'Open',
+                                  style: TextStyle(color: Colors.green),
+                                ),
+                                onPressed: () {/* ... */},
+                              ),
+                              const SizedBox(width: 8),
+                            ],
+                          ),
+
+                          ///add date widget
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -1,20 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class AgriplusRegView extends StatefulWidget {
-  const AgriplusRegView({Key? key}) : super(key: key);
+class AgriCashRegView extends StatefulWidget {
+  const AgriCashRegView({Key? key}) : super(key: key);
 
   @override
-  _AgriplusRegViewState createState() => _AgriplusRegViewState();
+  _AgriCashRegViewState createState() => _AgriCashRegViewState();
 }
 
-class _AgriplusRegViewState extends State<AgriplusRegView> {
+class _AgriCashRegViewState extends State<AgriCashRegView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
-        title: Text("Open AgriPlus Account"),
+        title: Text("AgriCash Account Opening"),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -90,6 +89,8 @@ class _AgriplusRegViewState extends State<AgriplusRegView> {
                                       borderRadius: BorderRadius.circular(30))),
                             ),
                           ),
+
+                          ///add date picker here
                         ],
                       ),
                     ),
