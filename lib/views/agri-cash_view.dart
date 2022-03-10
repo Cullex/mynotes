@@ -71,20 +71,21 @@ class _AgriCashRegViewState extends State<AgriCashRegView> {
                                     title: Text(
                                       'Input Details Below',
                                       textAlign: TextAlign.center,
+                                      style: TextStyle(color: Colors.white),
                                     ),
                                   ),
                                   ListTile(
                                     title: Text(
                                       'Date Of Birth',
-                                      style: TextStyle(color: Colors.green),
+                                      style: TextStyle(color: Colors.white),
                                     ),
                                     subtitle: Text(
                                       _dateTime.toString(),
-                                      style: TextStyle(color: Colors.green),
+                                      style: TextStyle(color: Colors.white),
                                     ),
                                     trailing: Icon(
                                       Icons.calendar_month,
-                                      color: Colors.green,
+                                      color: Colors.white,
                                     ),
                                     onTap: () => {_pickTime()},
                                     dense: false,
@@ -95,13 +96,18 @@ class _AgriCashRegViewState extends State<AgriCashRegView> {
                                     padding: EdgeInsets.all(10),
                                     width: 383,
                                     child: TextField(
+                                      style: TextStyle(color: Colors.green),
                                       controller: last_name,
                                       enableSuggestions: false,
                                       autocorrect: false,
                                       keyboardType: TextInputType.text,
                                       decoration: InputDecoration(
-                                          prefixIcon:
-                                              const Icon(Icons.account_box),
+                                          fillColor: Colors.white,
+                                          filled: true,
+                                          prefixIcon: const Icon(
+                                            Icons.account_box,
+                                            color: Colors.green,
+                                          ),
                                           hintText: 'Enter Surname',
                                           contentPadding:
                                               const EdgeInsets.all(15),
@@ -114,13 +120,18 @@ class _AgriCashRegViewState extends State<AgriCashRegView> {
                                     padding: EdgeInsets.all(10),
                                     width: 383,
                                     child: TextField(
+                                      style: TextStyle(color: Colors.green),
                                       controller: first_name,
                                       enableSuggestions: false,
                                       autocorrect: false,
                                       keyboardType: TextInputType.text,
                                       decoration: InputDecoration(
+                                          fillColor: Colors.white,
+                                          filled: true,
                                           prefixIcon: const Icon(
-                                              Icons.accessibility_new),
+                                            Icons.accessibility_new,
+                                            color: Colors.green,
+                                          ),
                                           hintText: 'Enter FirstName',
                                           contentPadding:
                                               const EdgeInsets.all(15),
@@ -133,13 +144,18 @@ class _AgriCashRegViewState extends State<AgriCashRegView> {
                                     padding: EdgeInsets.all(10),
                                     width: 383,
                                     child: TextField(
+                                      style: TextStyle(color: Colors.green),
                                       controller: national_id,
                                       enableSuggestions: false,
                                       autocorrect: false,
                                       keyboardType: TextInputType.text,
                                       decoration: InputDecoration(
-                                          prefixIcon:
-                                              const Icon(Icons.book_outlined),
+                                          fillColor: Colors.white,
+                                          filled: true,
+                                          prefixIcon: const Icon(
+                                            Icons.book_outlined,
+                                            color: Colors.green,
+                                          ),
                                           hintText: 'Enter National ID',
                                           contentPadding:
                                               const EdgeInsets.all(15),
@@ -152,13 +168,18 @@ class _AgriCashRegViewState extends State<AgriCashRegView> {
                                     padding: EdgeInsets.all(10),
                                     width: 383,
                                     child: TextField(
+                                      style: TextStyle(color: Colors.green),
                                       controller: full_address,
                                       enableSuggestions: false,
                                       autocorrect: false,
                                       keyboardType: TextInputType.text,
                                       decoration: InputDecoration(
-                                          prefixIcon:
-                                              const Icon(Icons.account_balance),
+                                          fillColor: Colors.white,
+                                          filled: true,
+                                          prefixIcon: const Icon(
+                                            Icons.account_balance,
+                                            color: Colors.green,
+                                          ),
                                           hintText: 'Enter Residential Address',
                                           contentPadding:
                                               const EdgeInsets.all(15),
@@ -171,12 +192,18 @@ class _AgriCashRegViewState extends State<AgriCashRegView> {
                                     padding: EdgeInsets.all(10),
                                     width: 383,
                                     child: TextField(
+                                      style: TextStyle(color: Colors.green),
                                       controller: msisdn,
                                       enableSuggestions: false,
                                       autocorrect: false,
                                       keyboardType: TextInputType.text,
                                       decoration: InputDecoration(
-                                          prefixIcon: const Icon(Icons.phone),
+                                          fillColor: Colors.white,
+                                          filled: true,
+                                          prefixIcon: const Icon(
+                                            Icons.phone,
+                                            color: Colors.green,
+                                          ),
                                           hintText: 'Enter Mobile Number',
                                           contentPadding:
                                               const EdgeInsets.all(15),
@@ -189,20 +216,35 @@ class _AgriCashRegViewState extends State<AgriCashRegView> {
                                   Row(
                                     children: [
                                       Radio(
+                                          fillColor:
+                                              MaterialStateColor.resolveWith(
+                                                  (states) => Colors.white),
                                           value: 1,
                                           groupValue: 'null',
                                           onChanged: (index) {}),
-                                      Expanded(child: Text('Male')),
+                                      Expanded(
+                                          child: Text(
+                                        'Male',
+                                        style: TextStyle(color: Colors.white),
+                                      )),
                                       Radio(
+                                          fillColor:
+                                              MaterialStateColor.resolveWith(
+                                                  (states) => Colors.white),
                                           value: 1,
                                           groupValue: 'null',
                                           onChanged: (index) {}),
-                                      Expanded(child: Text('Male'))
+                                      Expanded(
+                                          child: Text(
+                                        'Female',
+                                        style: TextStyle(color: Colors.white),
+                                      )),
+                                      Expanded(child: Text('Female'))
                                     ],
                                   ),
                                   ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        primary: Colors.green),
+                                        primary: Colors.white),
                                     onPressed: () async {
                                       Future.delayed(Duration(seconds: 6), () {
                                         setState(() {
@@ -225,7 +267,10 @@ class _AgriCashRegViewState extends State<AgriCashRegView> {
                                         'Account Successfully Captured',
                                       );
                                     },
-                                    child: Text('Create Account'),
+                                    child: Text(
+                                      'Create Account',
+                                      style: TextStyle(color: Colors.green),
+                                    ),
                                   ),
                                 ],
                               ),
