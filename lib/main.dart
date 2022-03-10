@@ -6,7 +6,9 @@ import 'package:mynotes/views/agri-cash_view.dart';
 import 'package:mynotes/views/login_view.dart';
 import 'package:mynotes/views/notes_view.dart';
 import 'package:mynotes/views/register_view.dart';
+import 'package:mynotes/views/tobacco_reg.dart';
 import 'package:mynotes/views/verify-email_view.dart';
+import 'package:mynotes/views/youth_account_reg.dart';
 
 import 'firebase_options.dart';
 
@@ -28,6 +30,8 @@ void main() async {
         notesRoute: (context) => const NotesView(),
         verifyEmailRoute: (context) => const VerifyEmailView(),
         agriCashRegRoute: (context) => const AgriCashRegView(),
+        tobaccoRegRoute: (context) => const TobaccoRegView(),
+        youthAccountRegRoute: (context) => const YouthAccountRegView(),
       },
     ),
   );
