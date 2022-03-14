@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:mynotes/services/storage_service.dart';
 import 'package:mynotes/utilities/show_success_dialog.dart';
+
+import '../utilities/show_error_dialog.dart';
 
 class AgriCashRegView extends StatefulWidget {
   const AgriCashRegView({Key? key}) : super(key: key);
@@ -20,6 +23,11 @@ class _AgriCashRegViewState extends State<AgriCashRegView> {
   final msisdn = TextEditingController();
   final national_id = TextEditingController();
 
+  var myInitialItem = 'male';
+  List<String> myItems = ['male', 'female'];
+
+  /// final Storage storage = Storage();
+
   @override
   void initState() {
     _dateTime = DateTime(DateTime.now().year - 26);
@@ -30,6 +38,7 @@ class _AgriCashRegViewState extends State<AgriCashRegView> {
   Widget build(BuildContext context) {
     CollectionReference flexicash =
         FirebaseFirestore.instance.collection('flexicash');
+    final Storage storage = Storage();
 
     return Scaffold(
       appBar: AppBar(
@@ -40,7 +49,7 @@ class _AgriCashRegViewState extends State<AgriCashRegView> {
         constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("assets/img_7.png"), fit: BoxFit.cover),
+              image: AssetImage("assets/img_4.png"), fit: BoxFit.cover),
         ),
         child: SafeArea(
           child: SingleChildScrollView(
@@ -74,23 +83,29 @@ class _AgriCashRegViewState extends State<AgriCashRegView> {
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
-                                  ListTile(
-                                    title: Text(
-                                      'Date Of Birth',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    subtitle: Text(
-                                      _dateTime.toString(),
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    trailing: Icon(
-                                      Icons.calendar_month,
+                                  Container(
+                                    width: 360,
+                                    height: 50,
+                                    decoration: BoxDecoration(
                                       color: Colors.white,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(30)),
                                     ),
-                                    onTap: () => {_pickTime()},
-                                    dense: false,
-                                    selected: true,
-                                    enabled: true,
+                                    padding: EdgeInsets.all(10),
+                                    child: DropdownButton(
+                                        iconEnabledColor: Colors.green,
+                                        isExpanded: true,
+                                        hint: Text("Select Gender"),
+                                        underline: Container(
+                                            color: Colors.transparent),
+                                        items: myItems.map((items) {
+                                          return DropdownMenuItem(
+                                              value: items, child: Text(items));
+                                        }).toList(),
+                                        onChanged: (value) {
+                                          myInitialItem = 'male';
+                                          setState(() {});
+                                        }),
                                   ),
                                   Container(
                                     padding: EdgeInsets.all(10),
@@ -212,64 +227,88 @@ class _AgriCashRegViewState extends State<AgriCashRegView> {
                                                   BorderRadius.circular(30))),
                                     ),
                                   ),
-                                  SizedBox(height: 10),
-                                  Row(
-                                    children: [
-                                      Radio(
-                                          fillColor:
-                                              MaterialStateColor.resolveWith(
-                                                  (states) => Colors.white),
-                                          value: 1,
-                                          groupValue: 'null',
-                                          onChanged: (index) {}),
-                                      Expanded(
-                                          child: Text(
-                                        'Male',
-                                        style: TextStyle(color: Colors.white),
-                                      )),
-                                      Radio(
-                                          fillColor:
-                                              MaterialStateColor.resolveWith(
-                                                  (states) => Colors.white),
-                                          value: 1,
-                                          groupValue: 'null',
-                                          onChanged: (index) {}),
-                                      Expanded(
-                                          child: Text(
-                                        'Female',
-                                        style: TextStyle(color: Colors.white),
-                                      )),
-                                      Expanded(child: Text('Female'))
-                                    ],
+                                  SizedBox(height: 5),
+                                  Container(
+                                    width: 360,
+                                    height: 49,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          shape: new RoundedRectangleBorder(
+                                            borderRadius:
+                                                new BorderRadius.circular(30),
+                                          ),
+                                          primary: Colors.white),
+                                      onPressed: () async {
+                                        final results =
+                                            await FilePicker.platform.pickFiles(
+                                                allowMultiple: true,
+                                                type: FileType.custom,
+                                                allowedExtensions: [
+                                              'png',
+                                              'jpg',
+                                              'jpeg',
+                                              'pdf'
+                                            ]);
+                                        if (results == null) {
+                                          await showErrorDialog(
+                                              context, "Upload Attachments");
+                                        } else {
+                                          return null;
+                                        }
+                                        final path =
+                                            results?.files.single.path!;
+                                        final fileName =
+                                            results?.files.single.name;
+                                        storage
+                                            .uploadFile(path!, fileName!)
+                                            .then((value) => print("Done"));
+
+                                        print(path);
+                                        print(fileName);
+                                      },
+                                      child: Text(
+                                        "Upload Attachments",
+                                        style: TextStyle(color: Colors.green),
+                                      ),
+                                    ),
                                   ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        primary: Colors.white),
-                                    onPressed: () async {
-                                      Future.delayed(Duration(seconds: 6), () {
-                                        setState(() {
-                                          isLoading = false;
+                                  SizedBox(height: 10),
+                                  Container(
+                                    width: 150,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                new BorderRadius.circular(30),
+                                          ),
+                                          primary: Colors.white),
+                                      onPressed: () async {
+                                        Future.delayed(Duration(seconds: 6),
+                                            () {
+                                          setState(() {
+                                            isLoading = false;
+                                          });
+                                          setState(() {
+                                            isLoading = true;
+                                          });
                                         });
-                                        setState(() {
-                                          isLoading = true;
+                                        flexicash.add({
+                                          'first_name': first_name.text,
+                                          'last_name': last_name.text,
+                                          'full_address': full_address.text,
+                                          'gender': gender.text,
+                                          'msisdn': msisdn.text,
+                                          'national_id': national_id.text
                                         });
-                                      });
-                                      flexicash.add({
-                                        'first_name': first_name.text,
-                                        'last_name': last_name.text,
-                                        'full_address': full_address.text,
-                                        'gender': gender.text,
-                                        'msisdn': msisdn.text,
-                                        'national_id': national_id.text
-                                      });
-                                      await showSuccessDialog(
-                                        context,
-                                        'Account Successfully Captured',
-                                      );
-                                    },
-                                    child: Text(
-                                      'Create Account',
-                                      style: TextStyle(color: Colors.green),
+                                        await showSuccessDialog(
+                                          context,
+                                          'Account Successfully Captured',
+                                        );
+                                      },
+                                      child: Text(
+                                        'Create Account',
+                                        style: TextStyle(color: Colors.green),
+                                      ),
                                     ),
                                   ),
                                 ],

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:mynotes/services/storage_service.dart';
+import 'package:mynotes/utilities/show_error_dialog.dart';
 import 'package:mynotes/utilities/show_success_dialog.dart';
 
 class CottonAccountRegView extends StatefulWidget {
@@ -28,6 +30,7 @@ class _CottonAccountRegViewState extends State<CottonAccountRegView> {
 
   @override
   Widget build(BuildContext context) {
+    final Storage storage = Storage();
     CollectionReference flexicash =
         FirebaseFirestore.instance.collection('flexicash');
 
@@ -211,6 +214,39 @@ class _CottonAccountRegViewState extends State<CottonAccountRegView> {
                                               borderRadius:
                                                   BorderRadius.circular(30))),
                                     ),
+                                  ),
+
+                                  ///file upload
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      final results = await FilePicker.platform
+                                          .pickFiles(
+                                              allowMultiple: false,
+                                              type: FileType.custom,
+                                              allowedExtensions: [
+                                            'png',
+                                            'jpg',
+                                            'jpeg',
+                                            'pdf'
+                                          ]);
+                                      if (results == null) {
+                                        await showErrorDialog(
+                                            context, "Upload National ID");
+                                      } else {
+                                        return null;
+                                      }
+                                      final path = results?.files.single.path!;
+                                      final fileName =
+                                          results?.files.single.name;
+
+                                      storage
+                                          .uploadFile(path!, fileName!)
+                                          .then((value) => print("Done"));
+
+                                      print(path);
+                                      print(fileName);
+                                    },
+                                    child: Text("Upload National Id"),
                                   ),
                                   SizedBox(height: 10),
                                   Row(

@@ -104,9 +104,7 @@ class _LoginViewState extends State<LoginView> {
                             height: 10,
                           ),
                           TextField(
-                            style: TextStyle(
-                              color: Colors.green,
-                            ),
+                            style: TextStyle(color: Colors.green),
                             controller: _password,
                             obscureText: true,
                             enableSuggestions: false,

@@ -20,6 +20,7 @@ void main() async {
   );
   runApp(
     MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'AFC Commercial Bank',
       theme: ThemeData(
         primarySwatch: Colors.blue,
