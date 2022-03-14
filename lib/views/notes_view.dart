@@ -112,7 +112,7 @@ class _NotesViewState extends State<NotesView> {
                               ),
                               onTap: () {
                                 Navigator.of(context)
-                                    .pushNamed(agriCashRegRoute);
+                                    .pushNamed(flexiCashAccountRegRoute);
                               },
                               subtitle: Text('Full KYC Account'),
                             ),

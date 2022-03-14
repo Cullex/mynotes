@@ -49,7 +49,7 @@ class _AgriCashRegViewState extends State<AgriCashRegView> {
         constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("assets/img_4.png"), fit: BoxFit.cover),
+              image: AssetImage("assets/img_15.png"), fit: BoxFit.cover),
         ),
         child: SafeArea(
           child: SingleChildScrollView(
