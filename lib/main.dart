@@ -32,7 +32,6 @@ void main() async {
         registerRoute: (context) => const RegisterView(),
         notesRoute: (context) => const NotesView(),
         verifyEmailRoute: (context) => const VerifyEmailView(),
-        agriCashRegRoute: (context) => const AgriCashRegView(),
         tobaccoRegRoute: (context) => const TobaccoRegView(),
         youthAccountRegRoute: (context) => const YouthAccountRegView(),
         cottonAccountRegRoute: (context) => const CottonAccountRegView(),
