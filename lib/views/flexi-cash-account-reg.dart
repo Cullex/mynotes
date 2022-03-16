@@ -38,20 +38,14 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
   final TextEditingController citizenshipController = TextEditingController();
   final TextEditingController ocupationController = TextEditingController();
 
-  List<PlatformFile> files = [];
+  late PlatformFile? nationalIdFile,
+      scanned_id_or_passport,
+      aditional_documents;
 
   _register() async {
     var url = Uri.parse('https://payments.agribank.co.zw/api/customers');
 
-    var stream = files.first;
     var request = new http.MultipartRequest("POST", url);
-
-    // multipart that takes file
-    var multipartFile = new http.MultipartFile.fromBytes(
-      'profile_photo',
-      File(stream.path ?? '').readAsBytesSync(),
-      filename: stream.name,
-    );
 
     request.fields.addAll({
       'first_name': first_nameController.text,
@@ -80,10 +74,27 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
       'country_of_birth': 'sidney',
       'citizenship': 'sidney',
       'ocupation': 'sidney',
+      'reference': 'aasssss',
     });
 
     // add file to multipart
-    request.files.add(multipartFile);
+    request.files.addAll([
+      http.MultipartFile.fromBytes(
+        'profile_photo',
+        File(nationalIdFile?.path ?? '').readAsBytesSync(),
+        filename: nationalIdFile?.name,
+      ),
+      http.MultipartFile.fromBytes(
+        'scanned_id_or_passport',
+        File(scanned_id_or_passport?.path ?? '').readAsBytesSync(),
+        filename: scanned_id_or_passport?.name,
+      ),
+      http.MultipartFile.fromBytes(
+        'aditional_documents',
+        File(aditional_documents?.path ?? '').readAsBytesSync(),
+        filename: aditional_documents?.name,
+      ),
+    ]);
 
     // send
     var response = await request.send();
@@ -753,7 +764,83 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
                       return;
                     }
 
-                    files = results?.files.toList() ?? [];
+                    nationalIdFile = results?.files?.isEmpty ?? true
+                        ? null
+                        : results.files.first;
+
+                    // final path = results?.files;
+                    // final fileName = results?.files.single.name;
+                    //
+                    // print(path);
+                    // print(fileName);
+                  },
+                  child: Text(
+                    "Upload National ID",
+                    style: TextStyle(color: Colors.green),
+                  ),
+                ),
+              ),
+              Container(
+                width: 330,
+                height: 49,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30),
+                      ),
+                      primary: Colors.white),
+                  onPressed: () async {
+                    final results = await FilePicker.platform.pickFiles(
+                      allowMultiple: true,
+                      type: FileType.custom,
+                      allowedExtensions: ['png', 'jpg', 'jpeg', 'pdf'],
+                    );
+
+                    if (results == null) {
+                      print("no file picked");
+                      return;
+                    }
+
+                    scanned_id_or_passport = results?.files?.isEmpty ?? true
+                        ? null
+                        : results.files.first;
+
+                    // final path = results?.files;
+                    // final fileName = results?.files.single.name;
+                    //
+                    // print(path);
+                    // print(fileName);
+                  },
+                  child: Text(
+                    "Upload National ID",
+                    style: TextStyle(color: Colors.green),
+                  ),
+                ),
+              ),
+              Container(
+                width: 330,
+                height: 49,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30),
+                      ),
+                      primary: Colors.white),
+                  onPressed: () async {
+                    final results = await FilePicker.platform.pickFiles(
+                      allowMultiple: true,
+                      type: FileType.custom,
+                      allowedExtensions: ['png', 'jpg', 'jpeg', 'pdf'],
+                    );
+
+                    if (results == null) {
+                      print("no file picked");
+                      return;
+                    }
+
+                    aditional_documents = results?.files?.isEmpty ?? true
+                        ? null
+                        : results.files.first;
 
                     // final path = results?.files;
                     // final fileName = results?.files.single.name;
