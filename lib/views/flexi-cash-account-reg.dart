@@ -37,6 +37,9 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
       TextEditingController();
   final TextEditingController citizenshipController = TextEditingController();
   final TextEditingController ocupationController = TextEditingController();
+  final TextEditingController grossIncomeController = TextEditingController();
+  final TextEditingController contactPersonController = TextEditingController();
+  final TextEditingController referenceController = TextEditingController();
 
   late PlatformFile? nationalIdFile,
       scanned_id_or_passport,
@@ -50,31 +53,31 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
     request.fields.addAll({
       'first_name': first_nameController.text,
       'last_name': last_nameController.text,
-      'mnemonic': 'sidney',
-      'gender': 'sidney',
-      'marital_status': 'sidney',
-      'target': 'sidney',
-      'sector': 'sidney',
-      'industry': 'sidney',
-      'nationality': 'sidney',
+      'mnemonic': 'XX-XXXXXXX-XX',
+      'gender': genderDropdownValue,
+      'marital_status': maritalStatusDropdownValue,
+      'target': targetInitialValue,
+      'sector': sectorInitialValue,
+      'industry': industryController.text,
+      'nationality': nationalityInitialValue,
       'date_of_birth': '2022-03-05',
-      'aml_risk_profile': 'sidney',
-      'language': 'sidney',
-      'full_address': 'nelson',
+      'aml_risk_profile': amlRiskProfile,
+      'language': languages,
+      'full_address': full_addressController.text,
       'msisdn': msisdnController.text,
-      'legal': 'sidney',
-      'gross_income': "250.0",
-      'negative_status': 'negative_status',
-      'residency': 'residency',
-      'contact_person': 'contact_person',
-      'class_of_customer': 'sidney',
+      'legal': legalController.text,
+      'gross_income': grossIncomeController.text,
+      'negative_status': customerStatusInitialValue,
+      'residency': 'Zimbabwe',
+      'contact_person': contactPersonController.text,
+      'class_of_customer': customerStatusInitialValue,
       'description': 'description',
-      'aditional_documents': 'aditional_documents',
-      'status_id': 'status_id',
-      'country_of_birth': 'sidney',
-      'citizenship': 'sidney',
-      'ocupation': 'sidney',
-      'reference': 'aasssss',
+      'aditional_documents': 'additional_documents',
+      'status_id': customerStatusInitialValue,
+      'country_of_birth': countryOfBirth,
+      'citizenship': citizenshipInitialValue,
+      'ocupation': ocupationController.text,
+      'reference': referenceController.text,
     });
 
     // add file to multipart
@@ -104,27 +107,66 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
     print('Response body: ${respStr}');
   }
 
-  String genderDropdownValue = 'gender';
-  var genderItems = ['male', 'female', 'gender'];
-  String maritalStatusDropdownValue = 'marital status';
-  var maritalStatusItems = ['married', 'single', 'divorced', 'marital status'];
-  String amlRiskProfile = 'aml risk';
+  String genderDropdownValue = 'Select Gender';
+  var genderItems = [
+    'male',
+    'female',
+  ];
+  String customerStatusInitialValue = 'Select Customer Status';
+  var customerStatusItems = [
+    'Standard',
+    'Deceased Indiv',
+    'Under Litigat',
+    'Fin. Inst Susp',
+    'Bankrupt',
+    'Hotlisted',
+    'Cust Deletion',
+    'T24 Updates'
+  ];
+
+  String sectorInitialValue = 'Select Customer Sector';
+  var sectorItems = [
+    'Individual',
+    'Agriculture',
+    'Banks Foreign',
+    'Local Banks',
+    'Central Banks',
+    'Post Office',
+    'Bank Branches',
+    'Financial Inst',
+    'Embas & NGO',
+    'State ENT',
+    'Energy',
+    'Mining',
+    'Const and Propt',
+    'Manufacturing',
+    'Distribution',
+    'Transport',
+    'Communication',
+    'Services',
+    'Thirdpart User',
+    'Other IB User'
+  ];
+
+  String maritalStatusDropdownValue = 'Select Marital Status';
+  var maritalStatusItems = [
+    'Single',
+    'Married',
+    'Divorced',
+    'Widowed',
+    'Engaged'
+  ];
+  String amlRiskProfile = 'Select AML Risk';
   var amlRiskProfileItems = [
     'low risk',
     'medium risk',
     'high risk',
     'aml risk'
   ];
-  String languages = 'Language';
+  String languages = 'Select Language';
   var languagesList = ['English', 'Shona', 'Ndebele', 'Other', 'Language'];
-  String customerClass = 'sector';
-  var customerClassList = [
-    'white collar',
-    'blue collar',
-    'self employed',
-    'sector'
-  ];
-  String countryOfBirth = 'Country Of Birth';
+
+  String countryOfBirth = 'Select Country Of Birth';
   var countryOfBirthList = [
     'Zimbabwe',
     'South Africa',
@@ -132,13 +174,42 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
     'Zambia',
     'Malawi'
   ];
-  String citizenshipInitialValue = 'Citizenship';
+  String nationalityInitialValue = 'Select Nationality';
+  var nationalityItemsList = [
+    'South Africa',
+    'Botswana',
+    'Zimbabwe',
+    'Namibia',
+    'Zambia'
+  ];
+  String citizenshipInitialValue = 'Select Citizenship';
   var citizenshipList = [
     'Zimbabwe',
     'South Africa',
     'Botswana',
     'Zambia',
     'Malawi'
+  ];
+  String targetInitialValue = 'Select Target';
+  var targetItemsList = [
+    'Standard Individual',
+    'Individual High NetWorth',
+    'Low Income',
+    'Minor',
+    'Student',
+    'Youth',
+    'Pensioners',
+    'Special Clients',
+    'Staff',
+    'Cross Boarder',
+    'Artisanal Miner',
+    'Farmer A1',
+    'Farmer A2',
+    'Sole Proprietor',
+    'PEP',
+    'Communal Farmer',
+    'Female Executive',
+    'SmallScale Miner'
   ];
   int currentStep = 0;
 
@@ -154,7 +225,7 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
             constraints: BoxConstraints.expand(),
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("assets/img_14.png"), fit: BoxFit.cover),
+                  image: AssetImage("assets/img_15.png"), fit: BoxFit.cover),
             ),
             child: Stepper(
               physics: ScrollPhysics(),
@@ -202,7 +273,7 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                      color: Colors.yellow.shade300),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 10),
@@ -385,7 +456,7 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
                         fillColor: Colors.white,
                         filled: true,
                         prefixIcon: const Icon(
-                          Icons.accessibility_new,
+                          Icons.account_circle_outlined,
                           color: Colors.green,
                         ),
                         hintText: 'Enter FirstName',
@@ -394,12 +465,14 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
                             borderRadius: BorderRadius.circular(30))),
                   ),
                 ),
+
+                ///contact person
                 Container(
                   padding: EdgeInsets.all(10),
                   width: 360,
                   child: TextField(
                     style: TextStyle(color: Colors.green),
-                    controller: nationalityController,
+                    controller: contactPersonController,
                     enableSuggestions: false,
                     autocorrect: false,
                     keyboardType: TextInputType.text,
@@ -407,14 +480,41 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
                         fillColor: Colors.white,
                         filled: true,
                         prefixIcon: const Icon(
-                          Icons.book_outlined,
+                          Icons.app_registration,
                           color: Colors.green,
                         ),
-                        hintText: 'Enter National ID',
+                        hintText: 'Enter Contact Person',
                         contentPadding: const EdgeInsets.all(15),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30))),
                   ),
+                ),
+
+                ///nationality
+                Container(
+                  width: 315,
+                  height: 45,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                  ),
+                  padding: EdgeInsets.all(10),
+                  child: DropdownButton(
+                      iconEnabledColor: Colors.green,
+                      isExpanded: true,
+                      hint: Text(nationalityInitialValue),
+                      underline: Container(color: Colors.transparent),
+                      items: nationalityItemsList.map((String items) {
+                        return DropdownMenuItem(
+                          value: items,
+                          child: Text(items),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          nationalityInitialValue = newValue!;
+                        });
+                      }),
                 ),
                 SizedBox(height: 13),
                 Container(
@@ -465,6 +565,35 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
                             borderRadius: BorderRadius.circular(30))),
                   ),
                 ),
+
+                ///
+                ///
+                Container(
+                  width: 315,
+                  height: 45,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                  ),
+                  padding: EdgeInsets.all(10),
+                  child: DropdownButton(
+                      iconEnabledColor: Colors.green,
+                      isExpanded: true,
+                      hint: Text(targetInitialValue),
+                      underline: Container(color: Colors.transparent),
+                      items: targetItemsList.map((String items) {
+                        return DropdownMenuItem(
+                          value: items,
+                          child: Text(items),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          targetInitialValue = newValue!;
+                        });
+                      }),
+                ),
+                SizedBox(height: 10),
                 Container(
                   padding: EdgeInsets.all(10),
                   width: 360,
@@ -488,12 +617,13 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
                   ),
                 ),
                 SizedBox(height: 10),
+
                 Container(
                   padding: EdgeInsets.all(10),
                   width: 360,
                   child: TextField(
                     style: TextStyle(color: Colors.green),
-                    controller: sectorController,
+                    controller: industryController,
                     enableSuggestions: false,
                     autocorrect: false,
                     keyboardType: TextInputType.text,
@@ -501,14 +631,40 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
                         fillColor: Colors.white,
                         filled: true,
                         prefixIcon: const Icon(
-                          Icons.phone,
+                          Icons.add_business,
                           color: Colors.green,
                         ),
-                        hintText: 'Enter Employment Sector',
+                        hintText: 'Enter Industry',
                         contentPadding: const EdgeInsets.all(15),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30))),
                   ),
+                ),
+                SizedBox(height: 10),
+                Container(
+                  width: 315,
+                  height: 45,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                  ),
+                  padding: EdgeInsets.all(10),
+                  child: DropdownButton(
+                      iconEnabledColor: Colors.green,
+                      isExpanded: true,
+                      hint: Text(targetInitialValue),
+                      underline: Container(color: Colors.transparent),
+                      items: targetItemsList.map((String items) {
+                        return DropdownMenuItem(
+                          value: items,
+                          child: Text(items),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          targetInitialValue = newValue!;
+                        });
+                      }),
                 ),
                 SizedBox(height: 10),
                 Container(
@@ -610,9 +766,9 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
                 child: DropdownButton(
                     iconEnabledColor: Colors.green,
                     isExpanded: true,
-                    hint: Text(customerClass),
+                    hint: Text(sectorInitialValue),
                     underline: Container(color: Colors.transparent),
-                    items: customerClassList.map((String items) {
+                    items: sectorItems.map((String items) {
                       return DropdownMenuItem(
                         value: items,
                         child: Text(items),
@@ -620,9 +776,34 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
                     }).toList(),
                     onChanged: (String? newValue) {
                       setState(() {
-                        customerClass = newValue!;
+                        sectorInitialValue = newValue!;
                       });
                     }),
+              ),
+
+              ///legal
+              SizedBox(height: 10),
+              Container(
+                padding: EdgeInsets.all(10),
+                width: 360,
+                child: TextField(
+                  style: TextStyle(color: Colors.green),
+                  controller: legalController,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      prefixIcon: const Icon(
+                        Icons.app_registration,
+                        color: Colors.green,
+                      ),
+                      hintText: 'Enter Name on ID',
+                      contentPadding: const EdgeInsets.all(15),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30))),
+                ),
               ),
               SizedBox(height: 13),
               Container(
@@ -672,7 +853,8 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
                     }).toList(),
                     onChanged: (String? newValue) {
                       setState(() {
-                        citizenshipInitialValue = newValue!;
+                        citizenshipInitialValue =
+                            newValue ?? "Select Citizenship";
                       });
                     }),
               ),
@@ -682,7 +864,7 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
                 width: 360,
                 child: TextField(
                   style: TextStyle(color: Colors.green),
-                  controller: first_nameController,
+                  controller: grossIncomeController,
                   enableSuggestions: false,
                   autocorrect: false,
                   keyboardType: TextInputType.text,
@@ -690,7 +872,7 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
                       fillColor: Colors.white,
                       filled: true,
                       prefixIcon: const Icon(
-                        Icons.account_box,
+                        Icons.vignette_outlined,
                         color: Colors.green,
                       ),
                       hintText: 'Enter Gross Income',
@@ -699,12 +881,43 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
                           borderRadius: BorderRadius.circular(30))),
                 ),
               ),
+
+              ///enetr status
+              SizedBox(height: 13),
+              Container(
+                width: 315,
+                height: 45,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                ),
+                padding: EdgeInsets.all(10),
+                child: DropdownButton(
+                    iconEnabledColor: Colors.green,
+                    isExpanded: true,
+                    hint: Text(sectorInitialValue),
+                    underline: Container(color: Colors.transparent),
+                    items: sectorItems.map((String items) {
+                      return DropdownMenuItem(
+                        value: items,
+                        child: Text(items),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        sectorInitialValue = newValue!;
+                      });
+                    }),
+              ),
+
+              ///reference
+              SizedBox(height: 4),
               Container(
                 padding: EdgeInsets.all(10),
                 width: 360,
                 child: TextField(
                   style: TextStyle(color: Colors.green),
-                  controller: first_nameController,
+                  controller: referenceController,
                   enableSuggestions: false,
                   autocorrect: false,
                   keyboardType: TextInputType.text,
@@ -712,36 +925,18 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
                       fillColor: Colors.white,
                       filled: true,
                       prefixIcon: const Icon(
-                        Icons.account_box,
+                        Icons.add_chart,
                         color: Colors.green,
                       ),
-                      hintText: 'Enter Residency',
+                      hintText: 'Enter Reference',
                       contentPadding: const EdgeInsets.all(15),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30))),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(10),
-                width: 360,
-                child: TextField(
-                  style: TextStyle(color: Colors.green),
-                  controller: mnemonicController,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
-                      prefixIcon: const Icon(
-                        Icons.account_box,
-                        color: Colors.green,
-                      ),
-                      hintText: 'Enter mnemonic',
-                      contentPadding: const EdgeInsets.all(15),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30))),
-                ),
+
+              SizedBox(
+                height: 13,
               ),
               Container(
                 width: 330,
@@ -775,10 +970,13 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
                     // print(fileName);
                   },
                   child: Text(
-                    "Upload National ID",
+                    "Upload Profile Photo",
                     style: TextStyle(color: Colors.green),
                   ),
                 ),
+              ),
+              SizedBox(
+                height: 13,
               ),
               Container(
                 width: 330,
@@ -812,10 +1010,13 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
                     // print(fileName);
                   },
                   child: Text(
-                    "Upload National ID",
+                    "Upload Scanned ID",
                     style: TextStyle(color: Colors.green),
                   ),
                 ),
+              ),
+              SizedBox(
+                height: 13,
               ),
               Container(
                 width: 330,
@@ -849,7 +1050,7 @@ class _FlexiCashAccountRegViewState extends State<FlexiCashAccountRegView> {
                     // print(fileName);
                   },
                   child: Text(
-                    "Upload National ID",
+                    "Upload Proof Of Residence",
                     style: TextStyle(color: Colors.green),
                   ),
                 ),
