@@ -77,24 +77,6 @@ class _CottonAccountRegViewState extends State<CottonAccountRegView> {
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
-                                  ListTile(
-                                    title: Text(
-                                      'Date Of Birth',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    subtitle: Text(
-                                      _dateTime.toString(),
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    trailing: Icon(
-                                      Icons.calendar_month,
-                                      color: Colors.white,
-                                    ),
-                                    onTap: () => {_pickTime()},
-                                    dense: false,
-                                    selected: true,
-                                    enabled: true,
-                                  ),
                                   Container(
                                     padding: EdgeInsets.all(10),
                                     width: 383,

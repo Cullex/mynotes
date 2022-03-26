@@ -126,7 +126,7 @@ class _NotesViewState extends State<NotesView> {
                               ),
                               onTap: () {
                                 Navigator.of(context)
-                                    .pushNamed(tobaccoRegRoute);
+                                    .pushNamed(tobaccoRequirementsRoute);
                               },
                               subtitle: Text('Full KYC For Farmers'),
                             ),

@@ -7,3 +7,5 @@ const tobaccoRegRoute = '/tobacco_reg/';
 const youthAccountRegRoute = '/youth_account_reg/';
 const cottonAccountRegRoute = '/cotton_account_reg/';
 const flexiCashAccountRegRoute = '/flexi-cash-account-reg/';
+const tobaccoRegContRoute = 'tobacco-reg-cont';
+const tobaccoRequirementsRoute = 'tobacco-requirements-view';

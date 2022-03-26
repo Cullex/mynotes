@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
-import 'package:mynotes/views/agri-cash_view.dart';
 import 'package:mynotes/views/cotton_account_reg.dart';
 import 'package:mynotes/views/flexi-cash-account-reg.dart';
 import 'package:mynotes/views/login_view.dart';
 import 'package:mynotes/views/notes_view.dart';
 import 'package:mynotes/views/register_view.dart';
+import 'package:mynotes/views/tobacco-requirements-view.dart';
 import 'package:mynotes/views/tobacco_reg.dart';
 import 'package:mynotes/views/verify-email_view.dart';
 import 'package:mynotes/views/youth_account_reg.dart';
@@ -36,6 +36,7 @@ void main() async {
         youthAccountRegRoute: (context) => const YouthAccountRegView(),
         cottonAccountRegRoute: (context) => const CottonAccountRegView(),
         flexiCashAccountRegRoute: (context) => const FlexiCashAccountRegView(),
+        tobaccoRequirementsRoute: (context) => const TobaccoRequirementsView(),
       },
     ),
   );
