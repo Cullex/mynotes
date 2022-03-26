@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:mynotes/views/tobacco_reg.dart';
+import 'package:mynotes/views/flexi-cash-account-reg.dart';
 
 import '../utilities/show_success_dialog.dart';
 
-class TobaccoRegViewCont extends StatefulWidget {
+class FlexiCashRegContView extends StatefulWidget {
   String first_name,
       last_name,
       full_address,
@@ -19,7 +19,7 @@ class TobaccoRegViewCont extends StatefulWidget {
       ocupation,
       gross_income;
 
-  TobaccoRegViewCont(
+  FlexiCashRegContView(
       {required this.first_name,
       required this.last_name,
       required this.full_address,
@@ -32,10 +32,10 @@ class TobaccoRegViewCont extends StatefulWidget {
       required this.ocupation});
 
   @override
-  State<TobaccoRegViewCont> createState() => _TobaccoRegViewContState();
+  State<FlexiCashRegContView> createState() => _FlexiCashRegContViewState();
 }
 
-class _TobaccoRegViewContState extends State<TobaccoRegViewCont> {
+class _FlexiCashRegContViewState extends State<FlexiCashRegContView> {
   bool isLoading = false;
 
   TextEditingController reference = new TextEditingController();
@@ -44,7 +44,7 @@ class _TobaccoRegViewContState extends State<TobaccoRegViewCont> {
       scanned_id_or_passport,
       aditional_documents;
 
-  _createTobaccoAccount() async {
+  _createFlexiAccount() async {
     var url = Uri.parse('https://payments.agribank.co.zw/api/customers');
 
     var request = new http.MultipartRequest("POST", url);
@@ -150,6 +150,12 @@ class _TobaccoRegViewContState extends State<TobaccoRegViewCont> {
                         scanned_id_or_passport = results?.files?.isEmpty ?? true
                             ? null
                             : results.files.first;
+
+                        // final path = results?.files;
+                        // final fileName = results?.files.single.name;
+                        //
+                        // print(path);
+                        // print(fileName);
                       },
                       child: Text(
                         "Upload Scanned ID",
@@ -254,7 +260,7 @@ class _TobaccoRegViewContState extends State<TobaccoRegViewCont> {
                                   ),
                                 ),
                           onPressed: () async {
-                            _createTobaccoAccount();
+                            _createFlexiAccount();
                             setState(() {
                               isLoading = true;
                             });
@@ -282,7 +288,8 @@ class _TobaccoRegViewContState extends State<TobaccoRegViewCont> {
                                 primary: Colors.redAccent.shade200),
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => TobaccoRegView()));
+                                  builder: (context) =>
+                                      FlexiCashAccountRegView()));
                             },
                             child: Text("Cancel")),
                       ),

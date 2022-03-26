@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
+import 'package:mynotes/views/flexicash-requirements-view.dart';
 
 import '../main.dart';
 import 'login_view.dart';
@@ -111,8 +112,9 @@ class _NotesViewState extends State<NotesView> {
                                 ),
                               ),
                               onTap: () {
-                                Navigator.of(context)
-                                    .pushNamed(flexiCashAccountRegRoute);
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        FlexiCashRequirementsView()));
                               },
                               subtitle: Text('Full KYC Account'),
                             ),
