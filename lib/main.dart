@@ -1,100 +1,77 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:mynotes/constants/routes.dart';
-import 'package:mynotes/views/cotton_account_reg.dart';
-import 'package:mynotes/views/flexi-cash-account-reg.dart';
-import 'package:mynotes/views/login_view.dart';
-import 'package:mynotes/views/notes_view.dart';
-import 'package:mynotes/views/register_view.dart';
-import 'package:mynotes/views/tobacco-requirements-view.dart';
-import 'package:mynotes/views/tobacco_reg.dart';
-import 'package:mynotes/views/verify-email_view.dart';
-import 'package:mynotes/views/youth_account_reg.dart';
 
-import 'firebase_options.dart';
+const _kPages = <String, IconData>{
+  'home': Icons.home,
+  'map': Icons.map,
+  'add': Icons.add,
+  'message': Icons.message,
+  'people': Icons.people,
+};
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'AFC Commercial Bank',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const HomePage(),
-      routes: {
-        loginRoute: (context) => const LoginView(),
-        registerRoute: (context) => const RegisterView(),
-        notesRoute: (context) => const NotesView(),
-        verifyEmailRoute: (context) => const VerifyEmailView(),
-        tobaccoRegRoute: (context) => const TobaccoRegView(),
-        youthAccountRegRoute: (context) => const YouthAccountRegView(),
-        cottonAccountRegRoute: (context) => const CottonAccountRegView(),
-        flexiCashAccountRegRoute: (context) => const FlexiCashAccountRegView(),
-        tobaccoRequirementsRoute: (context) => const TobaccoRequirementsView(),
-      },
-    ),
-  );
+class ConvexAppExample extends StatefulWidget {
+  const ConvexAppExample({super.key});
+
+  @override
+  _ConvexAppExampleState createState() => _ConvexAppExampleState();
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class _ConvexAppExampleState extends State<ConvexAppExample> {
+  TabStyle _tabStyle = TabStyle.reactCircle;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder(
-          future: Firebase.initializeApp(
-            options: DefaultFirebaseOptions.currentPlatform,
-          ),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.done:
-                final user = FirebaseAuth.instance.currentUser;
-                if (user != null) {
-                  if (user.emailVerified) {
-                    return const NotesView();
-                  } else {
-                    return const VerifyEmailView();
-                  }
-                } else {
-                  return const LoginView();
-                }
-
-              default:
-                return const CircularProgressIndicator();
-            }
-          }),
+    return DefaultTabController(
+      length: 5,
+      initialIndex: 2,
+      child: Scaffold(
+        body: Column(
+          children: [
+            _buildStyleSelector(),
+            const Divider(),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  for (final icon in _kPages.values) Icon(icon, size: 64),
+                ],
+              ),
+            ),
+          ],
+        ),
+        bottomNavigationBar: ConvexAppBar.badge(
+          // Optional badge argument: keys are tab indices, values can be
+          // String, IconData, Color or Widget.
+          /*badge=*/ const <int, dynamic>{3: '99+'},
+          style: _tabStyle,
+          items: <TabItem>[
+            for (final entry in _kPages.entries)
+              TabItem(icon: entry.value, title: entry.key),
+          ],
+          onTap: (int i) => print('click index=$i'),
+        ),
+      ),
     );
   }
-}
 
-Future<bool> showLogOutDialog(BuildContext context) {
-  return showDialog<bool>(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-          title: Text('Sign Out'),
-          content: const Text('Are You Sure Yo Want To Log Out'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
-              child: const Text('Log out'),
-            ),
-          ]);
-    },
-  ).then((value) => value ?? false);
+  // Select style enum from dropdown menu:
+  Widget _buildStyleSelector() {
+    final dropdown = DropdownButton<TabStyle>(
+      value: _tabStyle,
+      onChanged: (newStyle) {
+        if (newStyle != null) setState(() => _tabStyle = newStyle);
+      },
+      items: [
+        for (final style in TabStyle.values)
+          DropdownMenuItem(
+            value: style,
+            child: Text(style.toString()),
+          )
+      ],
+    );
+    return ListTile(
+      contentPadding: const EdgeInsets.all(8),
+      title: const Text('appbar style:'),
+      trailing: dropdown,
+    );
+  }
 }
